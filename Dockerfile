@@ -20,7 +20,7 @@ ADD assets/etc_icinga /etc/icinga
 ADD assets/supervisor /opt/supervisor
 ADD assets/icinga /opt/icinga
 
-VOLUME /etc/icinga /var/lib/icinga
+VOLUME /etc/icinga /var/lib/icinga /var/cache/icinga
 
 CMD ["/usr/bin/python", "/usr/bin/supervisord", "--configuration=/opt/supervisor/supervisord.conf"]
 
