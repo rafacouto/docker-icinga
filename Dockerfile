@@ -11,14 +11,14 @@ RUN apt-get update \
         icinga \
         nagios-nrpe-plugin \
         apache2 \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /etc/icinga
+    && rm -rf /var/lib/apt/lists/*
 
-ENV ICINGA_ADMIN_PASS="admin-pass"
+ENV ICINGA_ADMIN_USER="admin" ICINGA_ADMIN_PASS="admin-pass"
 
-ADD assets/etc_icinga /etc/icinga
-ADD assets/supervisor /opt/supervisor
-ADD assets/icinga /opt/icinga
+COPY assets/supervisor /opt/supervisor
+COPY assets/icinga /opt/icinga
+
+VOLUME ["/etc/icinga/config", "/var/lib/icinga", "/var/cache/icinga"]
 
 CMD ["/usr/bin/python", "/usr/bin/supervisord", "--configuration=/opt/supervisor/supervisord.conf"]
 
