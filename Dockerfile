@@ -18,7 +18,10 @@ ENV ICINGA_ADMIN_USER="admin" ICINGA_ADMIN_PASS="admin-pass"
 COPY assets/supervisor /opt/supervisor
 COPY assets/icinga /opt/icinga
 
-VOLUME ["/etc/icinga/config", "/var/lib/icinga", "/var/cache/icinga"]
+RUN echo 'RedirectMatch permanent ^/$ /icinga' >> /etc/icinga/apache2.conf \
+    && echo 'cfg_dir=/etc/icinga/config' >> /etc/icinga/icinga.cfg
+
+#VOLUME ["/etc/icinga/config", "/var/lib/icinga", "/var/cache/icinga"]
 
 CMD ["/usr/bin/python", "/usr/bin/supervisord", "--configuration=/opt/supervisor/supervisord.conf"]
 
